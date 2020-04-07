@@ -13,6 +13,10 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class MenuFragment : Fragment(){
 
+    companion object {
+        val tabTitles = arrayOf("Горячее", "Супы", "Напитки","Десерты")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -21,10 +25,12 @@ class MenuFragment : Fragment(){
         return inflater.inflate(R.layout.fragment_menu, container, false)
     }
 
+    //TODO: tab is cycle list
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         pager.adapter = PagerAdapter(this)
         TabLayoutMediator(tabLayout, pager) { tab, position ->
-            tab.text = "OBJECT ${(position + 1)}"
+            tab.text = tabTitles[position]
         }.attach()
     }
 }

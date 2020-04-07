@@ -8,6 +8,22 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        val product = arrayOf(Product("Супы","Борщ","Очень вкусно всем советую",100),
+            Product("Супы","Борщ","Очень вкусно всем советую",100),
+            Product("Супы","Борщ","Очень вкусно всем советую",100),
+            Product("Супы","Борщ","Очень вкусно всем советую",100),
+            Product("Супы","Борщ","Очень вкусно всем советую",100),
+            Product("Супы","Борщ","Очень вкусно всем советую",100),
+            Product("Супы","Борщ","Очень вкусно всем советую",100),
+            Product("Супы","Борщ","Очень вкусно всем советую",100),
+            Product("Супы","Борщ","Очень вкусно всем советую",100),
+            Product("Супы","Борщ","Очень вкусно всем советую",100),
+            Product("Супы","Борщ","Очень вкусно всем советую",100),
+            Product("Супы","Борщ","Очень вкусно всем советую",100),
+            Product("Супы","Борщ","Очень вкусно всем советую",100))
+    }
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_menu -> {

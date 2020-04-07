@@ -12,6 +12,10 @@ import kotlinx.android.synthetic.main.fragment_page.*
 class PageFragment : Fragment() {
     private val ARG_OBJECT = "object"
 
+    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
+    private lateinit var viewAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<*>
+    private lateinit var viewManager: androidx.recyclerview.widget.RecyclerView.LayoutManager
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -22,7 +26,20 @@ class PageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
-            text1.text = getInt(ARG_OBJECT).toString()
+            viewManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+            viewAdapter = PageRecyclerAdapter(MainActivity.product)
+
+            recyclerView =  view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.pageRecyclerView).apply {
+
+                setHasFixedSize(true)
+
+                layoutManager = viewManager
+
+                adapter = viewAdapter
+
+            }
         }
+
+
     }
 }

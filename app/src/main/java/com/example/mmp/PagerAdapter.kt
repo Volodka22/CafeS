@@ -11,7 +11,7 @@ class PagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     private val ARG_OBJECT = "object"
 
-    override fun getItemCount(): Int = 5
+    override fun getItemCount(): Int = MenuFragment.tabTitles.size
 
     override fun createFragment(position: Int): Fragment {
         // Return a NEW fragment instance in createFragment(int)
@@ -23,8 +23,8 @@ class PagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
         return fragment
     }
 
-    private val PAGE_COUNT = 4
-    private val tabTitles = arrayOf("Горячее", "Супы", "Напитки","Десерты")
+
+
 
 
 }
