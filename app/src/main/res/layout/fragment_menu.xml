@@ -5,8 +5,19 @@
              android:layout_height="match_parent"
              tools:context=".MenuFragment"
 >
-    <TextView android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:text="NePanimeshno"
+
+
+    <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tab_height"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/tab_height"
+            android:layout_marginBottom="@dimen/bmv_height"
     />
+
 </FrameLayout>
