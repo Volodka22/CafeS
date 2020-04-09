@@ -8,15 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.internal.ContextUtils.getActivity
 import kotlinx.android.synthetic.main.product_card.view.*
 
 class PageRecyclerAdapter(private val products: Array<Product>) :
     androidx.recyclerview.widget.RecyclerView.Adapter<PageRecyclerAdapter.MyViewHolder>() {
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder.
-    // Each data item is just a string in this case that is shown in a TextView.
+
+
     inner class MyViewHolder internal constructor(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
 
         internal val nameView: TextView = view.findViewById(R.id.name)
@@ -40,9 +41,14 @@ class PageRecyclerAdapter(private val products: Array<Product>) :
         holder.btnView.text = product.price.toString().plus(" рублей")
 
 
-        holder.itemView.setOnClickListener{
-            //TODO
+        holder.btnView.setOnClickListener{
+            if(MainActivity.ordProd[product] == null){
+                MainActivity.ordProd[product] = 1
+            }else MainActivity.ordProd[product] = MainActivity.ordProd[product]!! + 1
+
         }
+
+
 
     }
 

@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import kotlinx.android.synthetic.main.fragment_menu.*
 import androidx.fragment.app.FragmentActivity
 import android.app.Activity
+import android.content.Context
 import android.view.View
+import android.widget.Toast
 import com.google.android.material.tabs.TabLayoutMediator
 
 
@@ -16,6 +18,7 @@ class MenuFragment : Fragment(){
     companion object {
         val tabTitles = arrayOf("Горячее", "Супы", "Напитки","Десерты")
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,5 +35,6 @@ class MenuFragment : Fragment(){
         TabLayoutMediator(tabLayout, pager) { tab, position ->
             tab.text = tabTitles[position]
         }.attach()
+
     }
 }
