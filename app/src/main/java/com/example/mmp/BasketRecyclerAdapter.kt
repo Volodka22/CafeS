@@ -30,6 +30,7 @@ class BasketRecyclerAdapter(private val products: Array<Product>) :
         return MyViewHolder(view)
     }
 
+    
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
         val product = products[position]
