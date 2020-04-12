@@ -1,13 +1,17 @@
 package com.example.mmp
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
+
+    //TODO: delete static var
 
     companion object {
         val product = arrayOf(Product("Супы","Борщ","Очень вкусно всем советую",100),
@@ -24,7 +28,8 @@ class MainActivity : AppCompatActivity() {
             Product("Супы","Борщ","Очень вкусно всем советую",100),
             Product("Супы","Борщ","Очень вкусно всем советую",100))
 
-        var ordProd = mutableMapOf<Product,Int>()
+        val ordProd = mutableMapOf<Product,Int>()
+        lateinit var badge: BadgeDrawable
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -57,6 +62,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        badge = bottomNavigation.getOrCreateBadge(R.id.navigation_basket)
+        badge.isVisible = false
 
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 

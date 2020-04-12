@@ -1,6 +1,5 @@
 package com.example.mmp
 
-import android.widget.TextView
 import android.os.Bundle
 import android.view.ViewGroup
 import android.view.LayoutInflater
@@ -27,7 +26,7 @@ class PageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
             viewManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
-            viewAdapter = PageRecyclerAdapter(MainActivity.product)
+            viewAdapter = PageRecyclerAdapter(MainActivity.product, pageRecyclerView.context)
 
             recyclerView =  view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.pageRecyclerView).apply {
 

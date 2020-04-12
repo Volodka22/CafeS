@@ -1,8 +1,6 @@
 package com.example.mmp
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.ViewGroup
 import android.view.LayoutInflater
@@ -18,8 +16,6 @@ class BasketFragment : Fragment(){
 
     private var ok = false
 
-    private var prod =  emptyArray<Product>()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,28 +24,42 @@ class BasketFragment : Fragment(){
         return inflater.inflate(R.layout.fragment_basket, container, false)
     }
 
+    private fun upd(){
+        val a = mutableListOf<Product>()
+
+        MainActivity.ordProd.forEach{ (key, _) ->
+            a.add(key)
+        }
+
+        viewManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+
+        viewAdapter = BasketRecyclerAdapter(a.toTypedArray(),shock,ops,BasketRecyclerView)
+
+        recyclerView =  view!!.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.BasketRecyclerView).apply {
+
+            setHasFixedSize(false)
+
+            layoutManager = viewManager
+
+            adapter = viewAdapter
+
+        }
+    }
+
+
     override fun onStart() {
+
         if(ok){
-
-            val a = mutableListOf<Product>()
-
-            MainActivity.ordProd.forEach{ (key, _) ->
-                a.add(key)
+            if(MainActivity.ordProd.isEmpty()){
+                shock.visibility = View.VISIBLE
+                ops.visibility = View.VISIBLE
+                BasketRecyclerView.visibility = View.GONE
+            }else{
+                shock.visibility = View.GONE
+                ops.visibility = View.GONE
+                BasketRecyclerView.visibility = View.VISIBLE
             }
-
-            viewManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
-
-            viewAdapter = BasketRecyclerAdapter(a.toTypedArray())
-
-            recyclerView =  view!!.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.BasketRecyclerView).apply {
-
-                setHasFixedSize(false)
-
-                layoutManager = viewManager
-
-                adapter = viewAdapter
-
-            }
+            upd()
         }
         super.onStart()
     }
@@ -65,21 +75,7 @@ class BasketFragment : Fragment(){
             a.add(key)
         }
 
-        viewManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
-
-        viewAdapter = BasketRecyclerAdapter(a.toTypedArray())
-
-        recyclerView =  view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.BasketRecyclerView).apply {
-
-            setHasFixedSize(false)
-
-            layoutManager = viewManager
-
-            adapter = viewAdapter
-
-        }
-
-
+        upd()
 
     }
 }

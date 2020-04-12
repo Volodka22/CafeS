@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class MenuFragment : Fragment(){
 
     companion object {
-        val tabTitles = arrayOf("Горячее", "Супы", "Напитки","Десерты")
+        val tabTitles = arrayOf("Горячее", "Супы", "Напитки","Десерты","Обед","Ужин")
     }
 
 
@@ -27,8 +27,6 @@ class MenuFragment : Fragment(){
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_menu, container, false)
     }
-
-    //TODO: tab is cycle list
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         pager.adapter = PagerAdapter(this)

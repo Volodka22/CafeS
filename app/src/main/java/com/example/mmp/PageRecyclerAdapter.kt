@@ -1,19 +1,16 @@
 package com.example.mmp
 
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.provider.ContactsContract
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.internal.ContextUtils.getActivity
-import kotlinx.android.synthetic.main.product_card.view.*
+import androidx.fragment.app.FragmentActivity
 
-class PageRecyclerAdapter(private val products: Array<Product>) :
+class PageRecyclerAdapter(private val products: Array<Product>, private val context: Context) :
     androidx.recyclerview.widget.RecyclerView.Adapter<PageRecyclerAdapter.MyViewHolder>() {
 
 
@@ -23,7 +20,7 @@ class PageRecyclerAdapter(private val products: Array<Product>) :
         internal val nameView: TextView = view.findViewById(R.id.name)
         internal val sptView: TextView = view.findViewById(R.id.supporting_text)
         internal val btnView: Button = view.findViewById(R.id.btn)
-
+        internal val ic: ImageView = view.findViewById(R.id.ic)
     }
 
 
@@ -45,6 +42,11 @@ class PageRecyclerAdapter(private val products: Array<Product>) :
             if(MainActivity.ordProd[product] == null){
                 MainActivity.ordProd[product] = 1
             }else MainActivity.ordProd[product] = MainActivity.ordProd[product]!! + 1
+
+            MainActivity.badge.number++
+            MainActivity.badge.isVisible = true
+
+            //holder.ic.startAnimation(AnimationUtils.loadAnimation(context,R.anim.icon_anim))
 
         }
 
