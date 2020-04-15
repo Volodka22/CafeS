@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "418497086906",
+    "firebase_url": "https://nightclub-a3bf0.firebaseio.com",
+    "project_id": "nightclub-a3bf0",
+    "storage_bucket": "nightclub-a3bf0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418497086906:android:2672027d2f53546b768983",
+        "android_client_info": {
+          "package_name": "com.example.mmp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "418497086906-lab893spbm7fv5s3cl08qn90smcd7bqd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD25fTISc878NQHDcLnJ5e8Ymxj1ZQm-uc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "418497086906-lab893spbm7fv5s3cl08qn90smcd7bqd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

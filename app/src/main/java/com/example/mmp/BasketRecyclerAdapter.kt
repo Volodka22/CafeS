@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.squareup.picasso.Picasso
 
 
 class BasketRecyclerAdapter(products: Array<Product>,
@@ -22,6 +23,7 @@ class BasketRecyclerAdapter(products: Array<Product>,
         internal val priceView : TextView = view.findViewById(R.id.sum)
         internal val mnsView: TextView = view.findViewById(R.id.minus)
         internal val plsView: TextView = view.findViewById(R.id.pls)
+        internal val ic:ImageView = view.findViewById(R.id.img)
 
     }
 
@@ -41,7 +43,7 @@ class BasketRecyclerAdapter(products: Array<Product>,
         holder.cntView.text = MainActivity.ordProd[product].toString()
         holder.priceView.text = (product.price * MainActivity.ordProd[product]!!).toString().plus("  ₽")
 
-        holder.plsView.text = "+"
+        Picasso.get().load(product.img).into(holder.ic)
 
         holder.plsView.setOnClickListener{
             MainActivity.ordProd[product] = MainActivity.ordProd[product]!! + 1
@@ -87,10 +89,6 @@ class BasketRecyclerAdapter(products: Array<Product>,
                 }
             }
         }
-
-
-
-
 
     }
 

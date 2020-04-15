@@ -68,13 +68,6 @@ class BasketFragment : Fragment(){
 
         ok = true
 
-
-        val a = mutableListOf<Product>()
-
-        MainActivity.ordProd.forEach{ (key, _) ->
-            a.add(key)
-        }
-
         upd()
 
     }

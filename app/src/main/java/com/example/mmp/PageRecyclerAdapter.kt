@@ -1,14 +1,14 @@
 package com.example.mmp
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.graphics.Point
+import android.view.*
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
+import com.squareup.picasso.Picasso
 
 class PageRecyclerAdapter(private val products: Array<Product>, private val context: Context) :
     androidx.recyclerview.widget.RecyclerView.Adapter<PageRecyclerAdapter.MyViewHolder>() {
@@ -38,6 +38,14 @@ class PageRecyclerAdapter(private val products: Array<Product>, private val cont
         holder.btnView.text = product.price.toString().plus(" рублей")
 
 
+        val displayMetrics = context.resources.displayMetrics
+
+        val lp = holder.ic.layoutParams
+        lp.height = displayMetrics.widthPixels
+        holder.ic.layoutParams = lp
+
+        Picasso.get().load(product.img).into(holder.ic)
+
         holder.btnView.setOnClickListener{
             if(MainActivity.ordProd[product] == null){
                 MainActivity.ordProd[product] = 1
@@ -45,6 +53,8 @@ class PageRecyclerAdapter(private val products: Array<Product>, private val cont
 
             MainActivity.badge.number++
             MainActivity.badge.isVisible = true
+
+
 
             //holder.ic.startAnimation(AnimationUtils.loadAnimation(context,R.anim.icon_anim))
 

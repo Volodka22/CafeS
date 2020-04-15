@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class MenuFragment : Fragment(){
 
     companion object {
-        val tabTitles = arrayOf("Горячее", "Супы", "Напитки","Десерты","Обед","Ужин")
+        val tabTitles = arrayOf("Супы", "Напитки","Десерты","Обед","Ужин")
     }
 
 

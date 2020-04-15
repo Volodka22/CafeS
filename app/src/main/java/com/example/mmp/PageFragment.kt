@@ -1,6 +1,7 @@
 package com.example.mmp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
@@ -23,10 +24,21 @@ class PageFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_page, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
+
+            val a = mutableListOf<Product>()
+
+            Log.d("AAAAA",MenuFragment.tabTitles[getInt(ARG_OBJECT)-1])
+
+            MainActivity.product.forEach {
+                if(it.type == MenuFragment.tabTitles[getInt(ARG_OBJECT)-1])
+                    a.add(it)
+            }
+
             viewManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
-            viewAdapter = PageRecyclerAdapter(MainActivity.product, pageRecyclerView.context)
+            viewAdapter = PageRecyclerAdapter(a.toTypedArray(), pageRecyclerView.context)
 
             recyclerView =  view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.pageRecyclerView).apply {
 
