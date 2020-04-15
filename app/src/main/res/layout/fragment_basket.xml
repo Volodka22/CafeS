@@ -7,38 +7,61 @@
         tools:context=".MenuFragment">
 
 
-
-    <ImageView
-            android:id="@+id/shock"
-            android:layout_width="match_parent"
-            android:layout_height="370dp"
-            android:background="@mipmap/cat_shock_foreground"
-            android:layout_gravity="center"
-            android:layout_marginBottom="150dp"
-            android:contentDescription="TODO" />
-
-
-    <TextView
-            android:padding="50sp"
-            android:id="@+id/ops"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Вы всё ещё не сделали заказ?! Вернитесь в «Меню» и выберите то, что вам нравится!"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:layout_marginBottom="20dp"
-            />
-
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/BasketRecyclerView"
+    <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="@dimen/bmv_height"
-            android:visibility="gone"/>
+            android:id="@+id/container1"
+            android:visibility="gone">
+
+        <ImageView
+                android:id="@+id/shock"
+                android:layout_width="match_parent"
+                android:layout_height="370dp"
+                android:background="@mipmap/cat_shock_foreground"
+                android:layout_gravity="center"
+                android:layout_marginBottom="150dp"
+                android:contentDescription="TODO" />
+
+
+        <TextView
+                android:padding="50sp"
+                android:id="@+id/ops"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="Вы всё ещё не сделали заказ?! Вернитесь в «Меню» и выберите то, что вам нравится!"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"
+            />
+
+    </FrameLayout>
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/container2">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/BasketRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="100dp"
+                />
+
+        <Button
+                android:id="@+id/btn"
+                android:text="Оформить заказ за 10000 р"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/bmv_height"
+                />
+
+    </FrameLayout>
 
 </FrameLayout>

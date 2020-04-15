@@ -1,11 +1,13 @@
 package com.example.mmp
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_basket.*
+import kotlin.random.Random
 
 
 class BasketFragment : Fragment(){
@@ -33,7 +35,7 @@ class BasketFragment : Fragment(){
 
         viewManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
 
-        viewAdapter = BasketRecyclerAdapter(a.toTypedArray(),shock,ops,BasketRecyclerView)
+        viewAdapter = BasketRecyclerAdapter(a.toTypedArray(),container1,container2,btn)
 
         recyclerView =  view!!.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.BasketRecyclerView).apply {
 
@@ -51,13 +53,11 @@ class BasketFragment : Fragment(){
 
         if(ok){
             if(MainActivity.ordProd.isEmpty()){
-                shock.visibility = View.VISIBLE
-                ops.visibility = View.VISIBLE
-                BasketRecyclerView.visibility = View.GONE
+                container1.visibility = View.VISIBLE
+                container2.visibility = View.GONE
             }else{
-                shock.visibility = View.GONE
-                ops.visibility = View.GONE
-                BasketRecyclerView.visibility = View.VISIBLE
+                container1.visibility = View.GONE
+                container2.visibility = View.VISIBLE
             }
             upd()
         }
@@ -65,6 +65,20 @@ class BasketFragment : Fragment(){
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        btn.setOnClickListener {
+            val database = FirebaseDatabase.getInstance()
+            val myRef = database.getReference("nightclub_user")
+
+            val user = User()
+
+            MainActivity.ordProd.forEach {(key, cnt) ->
+                user.array.add(Pair(key.name,cnt))
+            }
+            user.id = Random.nextInt(1000000000)
+            myRef.child(user.id.toString()).setValue(user)
+
+        }
 
         ok = true
 

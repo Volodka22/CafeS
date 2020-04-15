@@ -3,18 +3,21 @@ package com.example.mmp
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 
 
 class BasketRecyclerAdapter(products: Array<Product>,
-                            private  val  shock:ImageView,
-                            private  val  ops:TextView,
-                            private  val rec : androidx.recyclerview.widget.RecyclerView) :
+                            private val container1:FrameLayout,
+                            private val container2: FrameLayout,
+                            private val btn:Button) :
     androidx.recyclerview.widget.RecyclerView.Adapter<BasketRecyclerAdapter.MyViewHolder>() {
 
     private val myData = mutableListOf(*products)
+    private var sum = 0
 
     inner class MyViewHolder internal constructor(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
 
@@ -38,14 +41,25 @@ class BasketRecyclerAdapter(products: Array<Product>,
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
+
+
         val product = myData[position]
         holder.nameView.text = product.name
         holder.cntView.text = MainActivity.ordProd[product].toString()
         holder.priceView.text = (product.price * MainActivity.ordProd[product]!!).toString().plus("  ₽")
 
+        sum += product.price * MainActivity.ordProd[product]!!
+
+        btn.text = "ОФОРМИТЬ ЗАКАЗ ЗА $sum ₽"
+
         Picasso.get().load(product.img).into(holder.ic)
 
         holder.plsView.setOnClickListener{
+
+            sum += product.price
+
+            btn.text = "ОФОРМИТЬ ЗАКАЗ ЗА $sum ₽"
+
             MainActivity.ordProd[product] = MainActivity.ordProd[product]!! + 1
 
 
@@ -54,17 +68,26 @@ class BasketRecyclerAdapter(products: Array<Product>,
 
 
             holder.cntView.text = MainActivity.ordProd[product].toString()
-            holder.priceView.text = (product.price* MainActivity.ordProd[product]!!).toString().plus("  ₽")
+            holder.priceView.text =
+                (product.price* MainActivity.ordProd[product]!!).toString().plus("  ₽")
+
+
         }
 
 
         holder.mnsView.setOnClickListener{
+
+            sum -= product.price
+
+            btn.text = "ОФОРМИТЬ ЗАКАЗ ЗА $sum ₽"
 
             if(MainActivity.ordProd[product] != null) {
 
                 MainActivity.ordProd[product] = MainActivity.ordProd[product]!! - 1
 
                 MainActivity.badge.number--
+
+
 
 
                 if (MainActivity.ordProd[product] == 0) {
@@ -76,9 +99,8 @@ class BasketRecyclerAdapter(products: Array<Product>,
 
                     if (MainActivity.badge.number == 0) {
                         MainActivity.badge.isVisible = false
-                        rec.visibility = View.GONE
-                        shock.visibility = View.VISIBLE
-                        ops.visibility = View.VISIBLE
+                        container1.visibility = View.VISIBLE
+                        container2.visibility = View.GONE
                     }
 
 
