@@ -4,14 +4,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".MenuFragment">
+        tools:context=".MenuFragment"
+        >
 
 
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/container1"
-            android:visibility="gone">
+            >
+
+
+        <!--
 
         <ImageView
                 android:id="@+id/shock"
@@ -22,13 +26,14 @@
                 android:layout_marginBottom="150dp"
                 android:contentDescription="TODO" />
 
+        -->
 
         <TextView
                 android:padding="50sp"
                 android:id="@+id/ops"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:textSize="22sp"
                 android:text="Вы всё ещё не сделали заказ?! Вернитесь в «Меню» и выберите то, что вам нравится!"
                 android:layout_gravity="center"
                 android:gravity="center"

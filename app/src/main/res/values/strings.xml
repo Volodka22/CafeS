@@ -4,4 +4,8 @@
     <string name="basket">Корзина</string>
     <string name="menu">Меню</string>
     <string name="my_app_id">mystitchapp-zigex</string>
+    <string name="dialog_accept">Выберите стол и подтвердите заказ</string>
+    <string name="fire">Подтверждаю</string>
+    <string name="cancel">Отмена</string>
+    <string name="number_table">Номер стола</string>
 </resources>
