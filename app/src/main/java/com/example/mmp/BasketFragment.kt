@@ -78,13 +78,13 @@ class BasketFragment : Fragment(){
         var chooseItem = 1
 
         MaterialAlertDialogBuilder(activity)
-            .setSingleChoiceItems(singleItems, checkedItem) { dialog, which ->
+            .setSingleChoiceItems(singleItems, checkedItem) { _, which ->
                 // Respond to item chosen
                 chooseItem = which+1
             }
             .setTitle(R.string.dialog_accept)
             .setPositiveButton(R.string.fire,
-                DialogInterface.OnClickListener { dialog, id ->
+                DialogInterface.OnClickListener { _, _ ->
                     val database = FirebaseDatabase.getInstance()
                     val myRef = database.getReference("nightclub_user")
 
@@ -99,7 +99,7 @@ class BasketFragment : Fragment(){
                     myRef.child(user.id.toString()).setValue(user)
                 })
             .setNegativeButton(R.string.cancel,
-                DialogInterface.OnClickListener { dialog, id ->
+                DialogInterface.OnClickListener { _, _ ->
                     // User cancelled the dialog
                 }).show()
     }
@@ -116,24 +116,6 @@ class BasketFragment : Fragment(){
 
         upd()
 
-    }
-
-    class MyDialogWindow : DialogFragment() {
-        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog { // Use the Builder class for convenient dialog construction
-            val builder = MaterialAlertDialogBuilder(activity!!.applicationContext)
-            builder.setMessage(R.string.dialog_accept)
-                .setPositiveButton(R.string.fire,
-                    DialogInterface.OnClickListener { dialog, id ->
-                        // FIRE ZE MISSILES!
-                    })
-                .setNegativeButton(R.string.cancel,
-                    DialogInterface.OnClickListener { dialog, id ->
-                        // User cancelled the dialog
-                    })
-
-            // Create the AlertDialog object and return it
-            return builder.create()
-        }
     }
 
 }

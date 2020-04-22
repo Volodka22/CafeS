@@ -6,8 +6,10 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.firebase.ui.auth.AuthUI
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -22,19 +24,7 @@ class MainActivity : AppCompatActivity() {
     //TODO: delete static var
 
     companion object {
-        val product = mutableListOf<Product>(/*Product("Супы","Борщ","Очень вкусно всем советую",100,"sdfs"),
-            Product("Супы","Борщ","Очень вкусно всем советую",100,"sdfs"),
-            Product("Супы","Борщ","Очень вкусно всем советую",100,"sdfs"),
-            Product("Супы","Борщ","Очень вкусно всем советую",100,"sdfs"),
-            Product("Супы","Борщ","Очень вкусно всем советую",100,"sdfs"),
-            Product("Супы","Борщ","Очень вкусно всем советую",100,"sdfs"),
-            Product("Супы","Борщ","Очень вкусно всем советую",100,"sdfs"),
-            Product("Супы","Борщ","Очень вкусно всем советую",100,"sdfs"),
-            Product("Супы","Борщ","Очень вкусно всем советую",100,"sdfs"),
-            Product("Супы","Борщ","Очень вкусно всем советую",100,"sdfs"),
-            Product("Супы","Борщ","Очень вкусно всем советую",100,"sdfs"),
-            Product("Супы","Борщ","Очень вкусно всем советую",100,"sdfs"),
-            Product("Супы","Борщ","Очень вкусно всем советую",100,"sdfs")*/)
+        val product = mutableListOf<Product>()
 
         val ordProd = mutableMapOf<Product,Int>()
         lateinit var badge: BadgeDrawable
@@ -50,10 +40,10 @@ class MainActivity : AppCompatActivity() {
                 openFragment(BasketFragment())
                 return@OnNavigationItemSelectedListener true
             }
-            /*R.id.navigation_contacts -> {
+            R.id.navigation_contacts -> {
                 openFragment(ContactsFragment())
                 return@OnNavigationItemSelectedListener true
-            }*/
+            }
         }
         false
     }
@@ -76,6 +66,17 @@ class MainActivity : AppCompatActivity() {
         requestedOrientation =  (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
+       /* AuthUI.getInstance()
+            .signOut(this)
+            .addOnCompleteListener {
+                // ...
+                if (FirebaseAuth.getInstance().currentUser != null) {
+                    Log.e("Anime", FirebaseAuth.getInstance().currentUser?.displayName)
+                } else {
+                    Log.e("Anime", "Anime")
+                }
+            }
+*/
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("products_nightclub")
         val myQuery = myRef.orderByChild("type")
@@ -90,20 +91,20 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-            override fun onChildChanged(dataSnapshot: DataSnapshot, s: String) {
-
-            }
-
             override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-
-            }
-
-            override fun onChildMoved(dataSnapshot: DataSnapshot, s: String) {
 
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
 
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         })
 
