@@ -12,7 +12,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:src="@drawable/ic_menu"
@@ -31,7 +30,6 @@
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:layout_marginTop="28dp"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             app:layout_constraintStart_toEndOf="@id/img"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,7 +38,6 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginBottom="28dp"
             android:gravity="center"
             android:text="—"
@@ -66,15 +63,13 @@
             android:layout_marginBottom="28dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/minus"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"/>
+            android:layout_marginStart="8dp" />
 
     <TextView
             android:id="@+id/pls"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginBottom="28dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cnt"
@@ -103,6 +98,5 @@
             android:layout_marginBottom="28dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/pls"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"/>
+            android:layout_marginStart="16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

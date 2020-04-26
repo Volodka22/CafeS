@@ -14,6 +14,7 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.concurrent.timer
@@ -49,12 +50,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openFragment(fragment: Fragment){
-
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container,fragment)
+        transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null)
-        transaction.commit()
-
+        try {
+            transaction.commit()
+        }catch (e:Exception){
+            Log.e("User","Пользователь вышел до конца загрузки")
+        }
     }
 
 
@@ -63,20 +66,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        requestedOrientation =  (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        requestedOrientation =  (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
+        val cafe = intent.getSerializableExtra("cafe") as Cafe
 
-       /* AuthUI.getInstance()
-            .signOut(this)
-            .addOnCompleteListener {
-                // ...
-                if (FirebaseAuth.getInstance().currentUser != null) {
-                    Log.e("Anime", FirebaseAuth.getInstance().currentUser?.displayName)
-                } else {
-                    Log.e("Anime", "Anime")
-                }
-            }
-*/
+        Picasso.get().load(cafe.img).into(img)
+
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("products_nightclub")
         val myQuery = myRef.orderByChild("type")
@@ -122,11 +117,12 @@ class MainActivity : AppCompatActivity() {
 
         timer.schedule(kotlin.concurrent.timerTask {
             runOnUiThread {
+                img.visibility = View.GONE
                 bottomNavigation.visibility = View.VISIBLE
             }
             openFragment(MenuFragment())
             timer.cancel()
-        },5000)
+        },2000)
 
 
 

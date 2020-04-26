@@ -6,9 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.FirebaseDatabase
@@ -77,7 +74,8 @@ class BasketFragment : Fragment(){
 
         var chooseItem = 1
 
-        MaterialAlertDialogBuilder(activity)
+
+        MaterialAlertDialogBuilder(activity!!)
             .setSingleChoiceItems(singleItems, checkedItem) { _, which ->
                 // Respond to item chosen
                 chooseItem = which+1

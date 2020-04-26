@@ -9,4 +9,6 @@
     <string name="cancel">Отмена</string>
     <string name="number_table">Номер стола</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyD1BA6r7xzNwuPXXKcTbNV_VrHUp7VTc0A</string>
+    <string name="search_hint">Поиск места</string>
+    <string name="app_label">Поиск</string>
 </resources>
