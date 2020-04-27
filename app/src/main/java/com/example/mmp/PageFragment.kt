@@ -1,5 +1,6 @@
 package com.example.mmp
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_page.*
 
 class PageFragment : Fragment() {
     private val ARG_OBJECT = "object"
+
 
     private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
     private lateinit var viewAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<*>
@@ -30,27 +32,58 @@ class PageFragment : Fragment() {
 
             val a = mutableListOf<Product>()
 
-            Log.d("AAAAA",MenuFragment.tabTitles[getInt(ARG_OBJECT)-1])
+            Log.d("AAAAA", MenuFragment.tabTitles[getInt(ARG_OBJECT) - 1])
 
             MainActivity.product.forEach {
-                if(it.type == MenuFragment.tabTitles[getInt(ARG_OBJECT)-1])
+                if (it.type == MenuFragment.tabTitles[getInt(ARG_OBJECT) - 1])
                     a.add(it)
             }
 
             viewManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
-            viewAdapter = PageRecyclerAdapter(a.toTypedArray(), pageRecyclerView.context)
+            viewAdapter =
+                PageRecyclerAdapter(a.toTypedArray(), pageRecyclerView.context) { product ->
+                    val callAct = Intent(activity!!, ProductProfileActivity::class.java)
+                    callAct.putExtra("cafe", MainActivity.cafe)
+                    callAct.putExtra("product", product)
 
-            recyclerView =  view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.pageRecyclerView).apply {
+                    startActivityForResult(callAct, 1)
+                }
 
-                setHasFixedSize(true)
+            recyclerView =
+                view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.pageRecyclerView)
+                    .apply {
 
-                layoutManager = viewManager
+                        setHasFixedSize(true)
 
-                adapter = viewAdapter
+                        layoutManager = viewManager
 
-            }
+                        adapter = viewAdapter
+
+                    }
         }
 
-
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (data!!.getIntExtra("cnt", 0) == 0)
+            return
+
+        MainActivity.badge.number += data!!.getIntExtra("cnt", 10)
+        val product = MainActivity.product.indexOfFirst {
+            it.name ==
+                    (data.getSerializableExtra("product") as Product).name
+        }
+        Log.e("Anime", product.toString())
+        if (MainActivity.ordProd[product] == null) {
+            MainActivity.ordProd[product] =
+                data.getIntExtra("cnt", 10)
+        } else MainActivity.ordProd[product] = MainActivity.ordProd[product]!! +
+                data.getIntExtra("cnt", 0)
+
+        if (MainActivity.badge.number != 0)
+            MainActivity.badge.isVisible = true
+    }
+
 }

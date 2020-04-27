@@ -14,13 +14,13 @@ import android.widget.Toast
 import com.google.android.material.tabs.TabLayoutMediator
 
 
-class MenuFragment : Fragment(){
+class MenuFragment : Fragment() {
 
     companion object {
-        val tabTitles = arrayOf("Супы", "Напитки","Десерты","Обед","Ужин")
+        val tabTitles = arrayOf("Супы", "Напитки", "Десерты", "Обед", "Ужин")
 
 
-        fun newInstance(cafe: Cafe):MenuFragment{
+        fun newInstance(cafe: Cafe): MenuFragment {
             val args = Bundle()
             args.putSerializable("cafe", cafe)
             val fragment = MenuFragment()

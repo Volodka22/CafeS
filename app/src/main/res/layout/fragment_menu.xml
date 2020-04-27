@@ -11,14 +11,13 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_height"
-            app:tabMode="scrollable"/>
+            app:tabMode="scrollable" />
 
     <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/tab_height"
-            android:layout_marginBottom="@dimen/bmv_height"
-    />
+            android:layout_marginBottom="@dimen/bmv_height" />
 
 </FrameLayout>

@@ -10,17 +10,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 
-class SearchAdapter(private val copyCafes: Array<Cafe>,val adapterOnClick : (Cafe) -> Unit) :
+class SearchAdapter(
+    private val copyCafes: Array<Cafe>,
+    private val adapterOnClick: (Cafe) -> Unit
+) :
     androidx.recyclerview.widget.RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
 
     private var cafes = mutableListOf(*copyCafes)
 
 
-    inner class MyViewHolder internal constructor(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+    inner class MyViewHolder internal constructor(view: View) :
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
 
         internal val nameView: TextView = view.findViewById(R.id.name)
-        internal val addressView : TextView = view.findViewById(R.id.address)
-        internal val icView:ImageView = view.findViewById(R.id.img)
+        internal val addressView: TextView = view.findViewById(R.id.address)
+        internal val icView: ImageView = view.findViewById(R.id.img)
 
     }
 
@@ -38,18 +42,16 @@ class SearchAdapter(private val copyCafes: Array<Cafe>,val adapterOnClick : (Caf
         holder.addressView.text = cafe.address
         holder.itemView.setOnClickListener {
             adapterOnClick(cafe)
-            //intent.putExtra("cafe",cafe)
-            //context.startActivity(intent)
         }
     }
 
-    fun filter(text:String){
+    fun filter(text: String) {
         cafes.clear()
-        if(text.isEmpty()){
+        if (text.isEmpty()) {
             cafes = copyCafes.toMutableList()
-        }else{
+        } else {
             copyCafes.forEach {
-                if(it.name.toLowerCase().contains(text.toLowerCase()))
+                if (it.name.toLowerCase().contains(text.toLowerCase()))
                     cafes.add(it)
             }
         }

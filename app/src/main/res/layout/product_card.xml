@@ -1,74 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
             android:id="@+id/card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp">
+            android:layout_marginTop="5dp">
 
-        <LinearLayout
+        <!-- Media -->
+        <com.google.android.material.circularreveal.CircularRevealRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-            <!-- Media -->
             <ImageView
                     android:id="@+id/ic"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
-                    android:src="@drawable/ic_menu"
-                    android:scaleType="centerCrop"
                     android:contentDescription="content_description_media"
-            />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_menu" />
 
-            <LinearLayout
+            <TextView
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/ic"
+                    android:layout_alignParentStart="true"
                     android:orientation="vertical"
-                    android:paddingHorizontal="8dp"
-            >
+                    android:padding="8dp"
+                    android:shadowColor="#000"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="6"
+                    android:text="Борщ"
+                    android:textColor="#FFF"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
-                <!-- Title, secondary and supporting text -->
+        </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
 
-                <TextView
-                        android:id="@+id/name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?attr/textAppearanceHeadline6"
-                        android:textSize="30sp" />
-
-                <TextView
-                        android:id="@+id/supporting_text"
-                        android:textSize="15sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textColor="?android:attr/textColorSecondary"
-                />
-
-            </LinearLayout>
-
-            <Button
-                    android:id="@+id/btn"
-                    android:layout_width = "wrap_content"
-                    android:layout_height = "wrap_content"
-                    android:layout_gravity = "end"
-                    android:textSize = "15sp"
-                    android:textColor = "@color/colorPrimary"
-                    android:background = "@color/colorPrimary"
-                    app:strokeColor = "@color/colorPrimary"
-                    style="?attr/materialButtonOutlinedStyle"
-
-                    android:layout_marginEnd="8dp"
-            />
-
-        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

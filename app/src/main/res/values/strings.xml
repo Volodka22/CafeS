@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MMP</string>
-    <string name="contacts">Личный кабинет</string>
+    <string name="contacts">Профиль</string>
     <string name="basket">Корзина</string>
     <string name="menu">Меню</string>
     <string name="my_app_id">mystitchapp-zigex</string>
@@ -11,4 +11,8 @@
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyD1BA6r7xzNwuPXXKcTbNV_VrHUp7VTc0A</string>
     <string name="search_hint">Поиск места</string>
     <string name="app_label">Поиск</string>
+    <string name="enter">Оставить комментарий</string>
+    <string name="EmptyBasket">Корзина пуста! Вернитесь в «Меню» и выберите то, что вам нравится!</string>
+    <string name="Signin_befor_write">Войдите, чтобы писать комментарии</string>
+    <string name="add_product">Заказ добавлен</string>
 </resources>

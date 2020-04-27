@@ -10,23 +10,26 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 
 
-class BasketRecyclerAdapter(products: Array<Product>,
-                            private val container1:FrameLayout,
-                            private val container2: FrameLayout,
-                            private val btn:Button) :
+class BasketRecyclerAdapter(
+    products: Array<Product>,
+    private val container1: FrameLayout,
+    private val container2: FrameLayout,
+    private val btn: Button
+) :
     androidx.recyclerview.widget.RecyclerView.Adapter<BasketRecyclerAdapter.MyViewHolder>() {
 
     private val myData = mutableListOf(*products)
     private var sum = 0
 
-    inner class MyViewHolder internal constructor(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+    inner class MyViewHolder internal constructor(view: View) :
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
 
         internal val nameView: TextView = view.findViewById(R.id.name)
         internal val cntView: TextView = view.findViewById(R.id.cnt)
-        internal val priceView : TextView = view.findViewById(R.id.sum)
+        internal val priceView: TextView = view.findViewById(R.id.sum)
         internal val mnsView: TextView = view.findViewById(R.id.minus)
         internal val plsView: TextView = view.findViewById(R.id.pls)
-        internal val ic:ImageView = view.findViewById(R.id.img)
+        internal val ic: ImageView = view.findViewById(R.id.img)
 
     }
 
@@ -38,60 +41,59 @@ class BasketRecyclerAdapter(products: Array<Product>,
     }
 
 
-
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
 
-
         val product = myData[position]
+        val pos = MainActivity.product.indexOf(product)
         holder.nameView.text = product.name
-        holder.cntView.text = MainActivity.ordProd[product].toString()
-        holder.priceView.text = (product.price * MainActivity.ordProd[product]!!).toString().plus("  ₽")
+        holder.cntView.text = MainActivity.ordProd[pos].toString()
+        holder.priceView.text = (product.price * MainActivity.ordProd[pos]!!).toString().plus("  ₽")
 
-        sum += product.price * MainActivity.ordProd[product]!!
+        sum += product.price * MainActivity.ordProd[pos]!!
 
         btn.text = "ОФОРМИТЬ ЗАКАЗ ЗА $sum ₽"
 
         Picasso.get().load(product.img).into(holder.ic)
 
-        holder.plsView.setOnClickListener{
+        holder.plsView.setOnClickListener {
 
             sum += product.price
 
             btn.text = "ОФОРМИТЬ ЗАКАЗ ЗА $sum ₽"
 
-            MainActivity.ordProd[product] = MainActivity.ordProd[product]!! + 1
+            MainActivity.ordProd[pos] = MainActivity.ordProd[pos]!! + 1
 
 
             MainActivity.badge.number++
 
 
 
-            holder.cntView.text = MainActivity.ordProd[product].toString()
+            holder.cntView.text = MainActivity.ordProd[pos].toString()
             holder.priceView.text =
-                (product.price* MainActivity.ordProd[product]!!).toString().plus("  ₽")
+                (product.price * MainActivity.ordProd[pos]!!).toString().plus("  ₽")
 
 
         }
 
 
-        holder.mnsView.setOnClickListener{
+        holder.mnsView.setOnClickListener {
 
             sum -= product.price
 
             btn.text = "ОФОРМИТЬ ЗАКАЗ ЗА $sum ₽"
 
-            if(MainActivity.ordProd[product] != null) {
+            if (MainActivity.ordProd[pos] != null) {
 
-                MainActivity.ordProd[product] = MainActivity.ordProd[product]!! - 1
+                MainActivity.ordProd[pos] = MainActivity.ordProd[pos]!! - 1
 
                 MainActivity.badge.number--
 
 
 
 
-                if (MainActivity.ordProd[product] == 0) {
-                    MainActivity.ordProd.remove(product)
+                if (MainActivity.ordProd[pos] == 0) {
+                    MainActivity.ordProd.remove(pos)
                     myData.remove(product)
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, myData.size)
@@ -105,9 +107,9 @@ class BasketRecyclerAdapter(products: Array<Product>,
 
 
                 } else {
-                    holder.cntView.text = MainActivity.ordProd[product].toString()
+                    holder.cntView.text = MainActivity.ordProd[pos].toString()
                     holder.priceView.text =
-                        (product.price * MainActivity.ordProd[product]!!).toString().plus("  ₽")
+                        (product.price * MainActivity.ordProd[pos]!!).toString().plus("  ₽")
                 }
             }
         }

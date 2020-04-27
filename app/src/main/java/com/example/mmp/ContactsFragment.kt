@@ -16,17 +16,16 @@ import kotlinx.android.synthetic.main.fragment_basket.*
 import kotlinx.android.synthetic.main.fragment_contacts.*
 
 
-class ContactsFragment : Fragment(){
+class ContactsFragment : Fragment() {
 
     private val RC_SIGN_IN = 123
 
 
-
     override fun onStart() {
         super.onStart()
-        if (FirebaseAuth.getInstance().currentUser != null){
+        if (FirebaseAuth.getInstance().currentUser != null) {
             sign.text = "Выйти"
-        }else{
+        } else {
             sign.text = "Войти"
         }
     }
@@ -43,14 +42,14 @@ class ContactsFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
 
         sign.setOnClickListener {
-            if (FirebaseAuth.getInstance().currentUser != null){
-                activity?.applicationContext?.let {
-                        it1 -> AuthUI.getInstance().signOut(it1).addOnCompleteListener{
-                            sign.text = "Войти"
-                        }
+            if (FirebaseAuth.getInstance().currentUser != null) {
+                activity?.applicationContext?.let { it1 ->
+                    AuthUI.getInstance().signOut(it1).addOnCompleteListener {
+                        sign.text = "Войти"
+                    }
                 }
 
-            }else{
+            } else {
 
                 startActivityForResult(
                     AuthUI.getInstance()

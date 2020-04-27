@@ -7,24 +7,30 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentActivity
 import com.squareup.picasso.Picasso
 
-class PageRecyclerAdapter(private val products: Array<Product>, private val context: Context) :
+class PageRecyclerAdapter(
+    private val products: Array<Product>, private val context: Context,
+    private val adapterOnClick: (Product) -> Unit
+) :
     androidx.recyclerview.widget.RecyclerView.Adapter<PageRecyclerAdapter.MyViewHolder>() {
 
 
-
-    inner class MyViewHolder internal constructor(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+    inner class MyViewHolder internal constructor(view: View) :
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
 
         internal val nameView: TextView = view.findViewById(R.id.name)
-        internal val sptView: TextView = view.findViewById(R.id.supporting_text)
-        internal val btnView: Button = view.findViewById(R.id.btn)
         internal val ic: ImageView = view.findViewById(R.id.ic)
+        internal val cardView: CardView = view.findViewById(R.id.card)
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageRecyclerAdapter.MyViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): PageRecyclerAdapter.MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.product_card, parent, false)
         return MyViewHolder(view)
@@ -34,9 +40,6 @@ class PageRecyclerAdapter(private val products: Array<Product>, private val cont
 
         val product = products[position]
         holder.nameView.text = product.name
-        holder.sptView.text = product.shortText
-        holder.btnView.text = product.price.toString().plus(" рублей")
-
 
         val displayMetrics = context.resources.displayMetrics
 
@@ -44,7 +47,17 @@ class PageRecyclerAdapter(private val products: Array<Product>, private val cont
         lp.height = displayMetrics.widthPixels
         holder.ic.layoutParams = lp
 
-        Picasso.get().load(product.img).into(holder.ic)
+        Picasso.get().load(product.img).resize(
+            context.resources.displayMetrics.widthPixels,
+            context.resources.displayMetrics.widthPixels
+        ).into(holder.ic)
+
+
+        holder.cardView.setOnClickListener {
+            adapterOnClick(product)
+        }
+
+        /*
 
         holder.btnView.setOnClickListener{
             if(MainActivity.ordProd[product] == null){
@@ -60,7 +73,7 @@ class PageRecyclerAdapter(private val products: Array<Product>, private val cont
 
         }
 
-
+        */
 
     }
 

@@ -30,18 +30,12 @@ import java.util.*
 
 class LoginActivity : FragmentActivity(), OnMapReadyCallback {
 
-    lateinit var mMap: GoogleMap
+    private lateinit var mMap: GoogleMap
 
     private lateinit var viewAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<*>
     private lateinit var viewManager: androidx.recyclerview.widget.RecyclerView.LayoutManager
 
-    var cafes = mutableListOf<Cafe>()
-
-    override fun onStart() {
-        super.onStart()
-        MainActivity.ordProd.clear()
-        MainActivity.product.clear()
-    }
+    private var cafes = mutableListOf<Cafe>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         requestedOrientation = (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
@@ -50,17 +44,25 @@ class LoginActivity : FragmentActivity(), OnMapReadyCallback {
 
         val a = Cafe()
         a.address = "ул. Ялтинская, 81А, Калининград, Калининградская область"
-        a.name = "Завод ночная смена"
+        a.name = "Ночной клуб \"Завод\""
         a.countTable = 6
         a.img = "http://zavod.sx/wp-content/uploads/2019/02/logo_cut.png"
 
+        cafes.add(a)
+        cafes.add(a)
+        cafes.add(a)
+        cafes.add(a)
         cafes.add(a)
 
         viewManager = androidx.recyclerview.widget.LinearLayoutManager(this)
 
         viewAdapter = SearchAdapter(cafes.toTypedArray()) {
-            startActivity(Intent(this@LoginActivity,
-                MainActivity::class.java).putExtra("cafe",it))
+            startActivity(
+                Intent(
+                    this@LoginActivity,
+                    MainActivity::class.java
+                ).putExtra("cafe", it)
+            )
         }
 
         recyclerView.apply {
@@ -81,7 +83,7 @@ class LoginActivity : FragmentActivity(), OnMapReadyCallback {
             searchView.setIconifiedByDefault(false)
         }
 
-        searchView.setOnSearchClickListener{
+        searchView.setOnSearchClickListener {
             mapCont.visibility = View.GONE
             searchView.setIconifiedByDefault(false)
         }
@@ -123,12 +125,10 @@ class LoginActivity : FragmentActivity(), OnMapReadyCallback {
     }
 
 
-
-
     override fun onBackPressed() {
         mapCont.visibility = View.VISIBLE
         searchView.setIconifiedByDefault(true)
-        searchView.setQuery("",false)
+        searchView.setQuery("", false)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -138,7 +138,7 @@ class LoginActivity : FragmentActivity(), OnMapReadyCallback {
 
         // Add a marker in Sydney and move the camera
 
-        for(i in cafes){
+        for (i in cafes) {
             mMap.addMarker(getLocationFromAddress(i.address)?.let {
                 MarkerOptions().position(
                     it
@@ -147,13 +147,16 @@ class LoginActivity : FragmentActivity(), OnMapReadyCallback {
         }
 
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(getLocationFromAddress("Россия Калининград Кафедральный собор"),
-            10F
-        ))
+        mMap.moveCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                getLocationFromAddress("Россия Калининград Кафедральный собор"),
+                10F
+            )
+        )
         mMap.setOnMarkerClickListener {
             mapCont.visibility = View.GONE
             searchView.setIconifiedByDefault(false)
-            searchView.setQuery(it.title,false)
+            searchView.setQuery(it.title, false)
             true
         }
     }

@@ -24,7 +24,4 @@ class PagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     }
 
 
-
-
-
 }

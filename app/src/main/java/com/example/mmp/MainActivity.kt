@@ -26,64 +26,63 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         val product = mutableListOf<Product>()
-
-        val ordProd = mutableMapOf<Product,Int>()
+        var cafe = Cafe()
+        val ordProd = mutableMapOf<Int, Int>()
         lateinit var badge: BadgeDrawable
     }
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_menu -> {
-                openFragment(MenuFragment())
-                return@OnNavigationItemSelectedListener true
+    private val mOnNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_menu -> {
+                    openFragment(MenuFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_basket -> {
+                    openFragment(BasketFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_contacts -> {
+                    openFragment(ContactsFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
             }
-            R.id.navigation_basket -> {
-                openFragment(BasketFragment())
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_contacts -> {
-                openFragment(ContactsFragment())
-                return@OnNavigationItemSelectedListener true
-            }
+            false
         }
-        false
-    }
 
-    private fun openFragment(fragment: Fragment){
+    private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null)
         try {
             transaction.commit()
-        }catch (e:Exception){
-            Log.e("User","Пользователь вышел до конца загрузки")
+        } catch (e: Exception) {
+            Log.e("User", "Пользователь вышел до конца загрузки")
         }
     }
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        requestedOrientation =  (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
-        val cafe = intent.getSerializableExtra("cafe") as Cafe
+        ordProd.clear()
+        product.clear()
+        cafe = intent.getSerializableExtra("cafe") as Cafe
+
+        requestedOrientation = (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
         Picasso.get().load(cafe.img).into(img)
 
         val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("products_nightclub")
+        val myRef = database.getReference("products_${cafe.name}")
         val myQuery = myRef.orderByChild("type")
 
-        Log.d("AAAAAA", product.size.toString())
 
         myQuery.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
                 product.add(dataSnapshot.getValue<Product>(Product::class.java)!!)
-
-                Log.d("AAAAAA", product.size.toString())
-
             }
 
             override fun onChildRemoved(dataSnapshot: DataSnapshot) {
@@ -122,9 +121,7 @@ class MainActivity : AppCompatActivity() {
             }
             openFragment(MenuFragment())
             timer.cancel()
-        },2000)
-
-
+        }, 2000)
 
     }
 
