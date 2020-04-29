@@ -57,6 +57,7 @@
                     android:layout_height="wrap_content"/>
 
             <Button
+                    android:visibility="gone"
                     android:layout_marginTop="1dp"
                     android:text="Любимое"
                     android:layout_width="match_parent"

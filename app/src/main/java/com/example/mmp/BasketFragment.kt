@@ -69,24 +69,18 @@ class BasketFragment : Fragment() {
 
     private fun makeDialog() {
 
-        val singleItems = arrayOf(
-            "Стол № 1",
-            "Стол № 2",
-            "Стол № 3",
-            "Стол № 4",
-            "Стол № 5",
-            "Стол № 6",
-            "Стол № 7",
-            "Стол № 8",
-            "Стол № 9"
-        )
+        val singleItems = mutableListOf<String>()
+
+        for(i in 1..MainActivity.cafe.countTable)
+            singleItems.add("Стол № $i")
+
         val checkedItem = 0
 
         var chooseItem = 1
 
 
         MaterialAlertDialogBuilder(activity!!)
-            .setSingleChoiceItems(singleItems, checkedItem) { _, which ->
+            .setSingleChoiceItems(singleItems.toTypedArray(), checkedItem) { _, which ->
                 // Respond to item chosen
                 chooseItem = which + 1
             }

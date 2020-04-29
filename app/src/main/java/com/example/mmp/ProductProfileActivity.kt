@@ -3,7 +3,6 @@ package com.example.mmp
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +14,6 @@ import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_product_profile.*
 import kotlinx.android.synthetic.main.activity_product_profile.view.*
-import kotlin.random.Random
 
 
 class ProductProfileActivity : AppCompatActivity() {
@@ -222,7 +220,7 @@ class ProductProfileActivity : AppCompatActivity() {
         val database = FirebaseDatabase.getInstance()
         val myRef = database.reference.child(cafe.name).child("комментарии").child(product.name)
         if (FirebaseAuth.getInstance().currentUser == null) {
-            textField.error = getString(R.string.Signin_befor_write)
+            textField.error = getString(R.string.Sign_in_before_write)
             textField.input.isEnabled = false
         } else {
             textField.setEndIconOnClickListener {

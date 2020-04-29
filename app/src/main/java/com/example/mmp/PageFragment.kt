@@ -7,14 +7,18 @@ import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_page.*
 
 
 class PageFragment : Fragment() {
+
     private val ARG_OBJECT = "object"
+    private var type:String = ""
 
-
-    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
     private lateinit var viewAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<*>
     private lateinit var viewManager: androidx.recyclerview.widget.RecyclerView.LayoutManager
 
@@ -31,8 +35,7 @@ class PageFragment : Fragment() {
         arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
 
             val a = mutableListOf<Product>()
-
-            Log.d("AAAAA", MenuFragment.tabTitles[getInt(ARG_OBJECT) - 1])
+            type = MenuFragment.tabTitles[getInt(ARG_OBJECT) - 1]
 
             MainActivity.product.forEach {
                 if (it.type == MenuFragment.tabTitles[getInt(ARG_OBJECT) - 1])
@@ -40,8 +43,7 @@ class PageFragment : Fragment() {
             }
 
             viewManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
-            viewAdapter =
-                PageRecyclerAdapter(a.toTypedArray(), pageRecyclerView.context) { product ->
+            viewAdapter = PageRecyclerAdapter(pageRecyclerView.context) { product ->
                     val callAct = Intent(activity!!, ProductProfileActivity::class.java)
                     callAct.putExtra("cafe", MainActivity.cafe)
                     callAct.putExtra("product", product)
@@ -49,17 +51,14 @@ class PageFragment : Fragment() {
                     startActivityForResult(callAct, 1)
                 }
 
-            recyclerView =
-                view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.pageRecyclerView)
-                    .apply {
+            pageRecyclerView.apply {
+                setHasFixedSize(true)
+                layoutManager = viewManager
+                adapter = viewAdapter
+            }
 
-                        setHasFixedSize(true)
+            workWithDatabase()
 
-                        layoutManager = viewManager
-
-                        adapter = viewAdapter
-
-                    }
         }
 
     }
@@ -83,6 +82,34 @@ class PageFragment : Fragment() {
 
         if (MainActivity.badge.number != 0)
             MainActivity.badge.isVisible = true
+    }
+
+    private fun workWithDatabase(){
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.reference.child(MainActivity.cafe.name).child("продукты")
+
+        myRef.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
+                val product = dataSnapshot.getValue<Product>(Product::class.java)!!
+                if(product.type == type) (viewAdapter as PageRecyclerAdapter).add(product)
+            }
+
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
+            }
+        })
     }
 
 }

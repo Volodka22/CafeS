@@ -11,13 +11,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 
-class SearchAdapter(
-    private val copyCafes: Array<Cafe>,
-    private val adapterOnClick: (Cafe) -> Unit
-) :
-    androidx.recyclerview.widget.RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
+class SearchAdapter(private val adapterOnClick: (Cafe) -> Unit
+) : androidx.recyclerview.widget.RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
 
-    private var cafes = mutableListOf(*copyCafes)
+    private var  copyCafes = mutableListOf<Cafe>()
+    private var cafes = mutableListOf<Cafe>()
 
 
     inner class MyViewHolder internal constructor(view: View) :
@@ -44,6 +42,12 @@ class SearchAdapter(
         holder.itemView.setOnClickListener {
             adapterOnClick(cafe)
         }
+    }
+
+    fun add(cafe: Cafe){
+        copyCafes.add(cafe)
+        cafes.add(cafe)
+        notifyDataSetChanged()
     }
 
     fun filter(text: String) {

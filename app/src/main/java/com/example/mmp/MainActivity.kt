@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         val ordProd = mutableMapOf<Int, Int>()
         lateinit var badge: BadgeDrawable
     }
+
+    private val LOGO_TIME:Long = 3000
 
     private val mOnNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -101,10 +104,24 @@ class MainActivity : AppCompatActivity() {
             }
             openFragment(MenuFragment())
             timer.cancel()
-        }, 3000)
+        }, LOGO_TIME)
 
     }
 
+    override fun onBackPressed() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.return_to_loginActivity))
+            .setPositiveButton(
+                R.string.yes
+            ) { _, _ ->
+                finish()
+            }
+            .setNegativeButton(
+                R.string.no
+            ) { _, _ ->
+                // User cancelled the dialog
+            }.show()
+    }
 
     private fun workWithDatabase(){
         val database = FirebaseDatabase.getInstance()

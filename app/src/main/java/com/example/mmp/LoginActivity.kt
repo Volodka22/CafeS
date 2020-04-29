@@ -23,6 +23,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_basket.*
 import java.util.*
@@ -42,65 +46,7 @@ class LoginActivity : FragmentActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val a = Cafe()
-        a.address = "ул. Ялтинская, 81А, Калининград, Калининградская область"
-        a.name = "Ночной клуб \"Завод\""
-        a.countTable = 6
-        a.img = "https://i.ibb.co/TvbSfC6/2.png"
-
-        cafes.add(a)
-        cafes.add(a)
-        cafes.add(a)
-        cafes.add(a)
-        cafes.add(a)
-
-        viewManager = androidx.recyclerview.widget.LinearLayoutManager(this)
-
-        viewAdapter = SearchAdapter(cafes.toTypedArray()) {
-            startActivity(
-                Intent(
-                    this@LoginActivity,
-                    MainActivity::class.java
-                ).putExtra("cafe", it)
-            )
-        }
-
-        recyclerView.apply {
-
-            setHasFixedSize(false)
-
-            layoutManager = viewManager
-
-            adapter = viewAdapter
-
-        }
-
-
-        searchView.queryHint = "Поиск"
-
-        searchView.setOnClickListener {
-            mapCont.visibility = View.GONE
-            searchView.setIconifiedByDefault(false)
-        }
-
-        searchView.setOnSearchClickListener {
-            mapCont.visibility = View.GONE
-            searchView.setIconifiedByDefault(false)
-        }
-
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                (viewAdapter as SearchAdapter).filter(query)
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean { //    adapter.getFilter().filter(newText);
-                (viewAdapter as SearchAdapter).filter(newText)
-                return false
-            }
-        })
+        searchInit()
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -131,20 +77,94 @@ class LoginActivity : FragmentActivity(), OnMapReadyCallback {
         searchView.setQuery("", false)
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
+    private fun searchInit(){
+        searchView.queryHint = "Поиск"
 
+        searchView.setOnClickListener {
+            mapCont.visibility = View.GONE
+            searchView.setIconifiedByDefault(false)
+        }
+
+        searchView.setOnSearchClickListener {
+            mapCont.visibility = View.GONE
+            searchView.setIconifiedByDefault(false)
+        }
+
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                (viewAdapter as SearchAdapter).filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean { //    adapter.getFilter().filter(newText);
+                (viewAdapter as SearchAdapter).filter(newText)
+                return false
+            }
+        })
+    }
+
+    fun listInit(){
+
+        viewManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+
+        viewAdapter = SearchAdapter() {
+            startActivity(
+                Intent(
+                    this@LoginActivity,
+                    MainActivity::class.java
+                ).putExtra("cafe", it)
+            )
+        }
+
+        recyclerView.apply {
+
+            setHasFixedSize(false)
+
+            layoutManager = viewManager
+
+            adapter = viewAdapter
+
+        }
+
+        FirebaseDatabase.getInstance().reference.child("Заведения")
+            .addChildEventListener(object : ChildEventListener {
+                override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
+                    val cafe = dataSnapshot.getValue<Cafe>(Cafe::class.java)!!
+                    cafes.add(cafe)
+                    mMap.addMarker(getLocationFromAddress(cafe.address)?.let {
+                        MarkerOptions().position(
+                            it
+                        ).title(cafe.name)
+                    })
+                    (viewAdapter as SearchAdapter).add(cafe)
+                }
+
+                override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+
+                }
+
+                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+                }
+
+                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
+                }
+            })
+
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
 
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-
-        for (i in cafes) {
-            mMap.addMarker(getLocationFromAddress(i.address)?.let {
-                MarkerOptions().position(
-                    it
-                ).title(i.name)
-            })
-        }
+        listInit()
 
 
         mMap.moveCamera(

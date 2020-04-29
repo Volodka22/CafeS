@@ -12,11 +12,11 @@ import androidx.fragment.app.FragmentActivity
 import com.squareup.picasso.Picasso
 
 class PageRecyclerAdapter(
-    private val products: Array<Product>, private val context: Context,
+    private val context: Context,
     private val adapterOnClick: (Product) -> Unit
-) :
-    androidx.recyclerview.widget.RecyclerView.Adapter<PageRecyclerAdapter.MyViewHolder>() {
+) : androidx.recyclerview.widget.RecyclerView.Adapter<PageRecyclerAdapter.MyViewHolder>() {
 
+     private val products = mutableListOf<Product>()
 
     inner class MyViewHolder internal constructor(view: View) :
         androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
@@ -56,25 +56,11 @@ class PageRecyclerAdapter(
         holder.cardView.setOnClickListener {
             adapterOnClick(product)
         }
+    }
 
-        /*
-
-        holder.btnView.setOnClickListener{
-            if(MainActivity.ordProd[product] == null){
-                MainActivity.ordProd[product] = 1
-            }else MainActivity.ordProd[product] = MainActivity.ordProd[product]!! + 1
-
-            MainActivity.badge.number++
-            MainActivity.badge.isVisible = true
-
-
-
-            //holder.ic.startAnimation(AnimationUtils.loadAnimation(context,R.anim.icon_anim))
-
-        }
-
-        */
-
+    fun add(product: Product){
+        products.add(product)
+        notifyDataSetChanged()
     }
 
     // Return the size of your dataset (invoked by the layout manager)
