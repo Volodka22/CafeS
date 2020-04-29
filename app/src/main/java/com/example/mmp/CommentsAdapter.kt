@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import java.util.*
 
 class CommentsAdapter :
     androidx.recyclerview.widget.RecyclerView.Adapter<CommentsAdapter.MyViewHolder>() {
 
-    private val comments = mutableListOf<Comment>()
+    private val comments = LinkedList<Comment>()
 
 
     inner class MyViewHolder internal constructor(view: View) :
@@ -21,7 +22,6 @@ class CommentsAdapter :
         internal val icView: ImageView = view.findViewById(R.id.img)
 
     }
-
 
 
     override fun onCreateViewHolder(
@@ -41,7 +41,7 @@ class CommentsAdapter :
     }
 
     fun add(comment: Comment) {
-        comments.add(comment)
+        comments.addFirst(comment)
         notifyDataSetChanged()
     }
 

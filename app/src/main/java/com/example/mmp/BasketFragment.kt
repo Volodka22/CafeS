@@ -1,7 +1,5 @@
 package com.example.mmp
 
-import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +9,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_basket.*
-import kotlin.random.Random
 
 
 class BasketFragment : Fragment() {
@@ -98,17 +95,17 @@ class BasketFragment : Fragment() {
                 R.string.fire
             ) { _, _ ->
                 val database = FirebaseDatabase.getInstance()
-                val myRef = database.getReference("nightclub_user")
+                val myRef = database.reference.
+                    child(MainActivity.cafe.name).child("заказы")
 
                 val user = User()
 
                 user.numberTable = chooseItem
 
                 MainActivity.ordProd.forEach { (key, cnt) ->
-                    user.array.add(Pair(MainActivity.product[key].name, cnt))
+                    user.array.add(User.Arr(MainActivity.product[key].name, cnt))
                 }
-                user.id = Random.nextInt(1000000000)
-                myRef.child(user.id.toString()).setValue(user)
+                myRef.child(myRef.push().key!!).setValue(user)
 
 
                 MainActivity.ordProd.clear()

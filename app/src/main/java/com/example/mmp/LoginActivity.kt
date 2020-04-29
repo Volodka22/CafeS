@@ -46,7 +46,7 @@ class LoginActivity : FragmentActivity(), OnMapReadyCallback {
         a.address = "ул. Ялтинская, 81А, Калининград, Калининградская область"
         a.name = "Ночной клуб \"Завод\""
         a.countTable = 6
-        a.img = "http://zavod.sx/wp-content/uploads/2019/02/logo_cut.png"
+        a.img = "https://i.ibb.co/TvbSfC6/2.png"
 
         cafes.add(a)
         cafes.add(a)

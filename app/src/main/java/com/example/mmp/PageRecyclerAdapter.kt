@@ -30,7 +30,7 @@ class PageRecyclerAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PageRecyclerAdapter.MyViewHolder {
+    ): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.product_card, parent, false)
         return MyViewHolder(view)

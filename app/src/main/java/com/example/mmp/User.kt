@@ -4,7 +4,11 @@ import java.io.Serializable
 
 class User : Serializable {
 
-    var numberTable: Int = 0
-    val array = mutableListOf<Pair<String, Int>>()
-    var id = 14
+    class Arr(string: String, int: Int) : Serializable{
+        var name = string
+        var count = int
+    }
+
+    var numberTable:Int = 0
+    val array = mutableListOf<Arr>()
 }

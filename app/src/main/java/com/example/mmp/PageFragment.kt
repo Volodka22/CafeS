@@ -70,12 +70,11 @@ class PageFragment : Fragment() {
         if (data!!.getIntExtra("cnt", 0) == 0)
             return
 
-        MainActivity.badge.number += data!!.getIntExtra("cnt", 10)
+        MainActivity.badge.number += data.getIntExtra("cnt", 10)
         val product = MainActivity.product.indexOfFirst {
             it.name ==
                     (data.getSerializableExtra("product") as Product).name
         }
-        Log.e("Anime", product.toString())
         if (MainActivity.ordProd[product] == null) {
             MainActivity.ordProd[product] =
                 data.getIntExtra("cnt", 10)

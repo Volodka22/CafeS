@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         val product = mutableListOf<Product>()
+        val likeProducts = mutableListOf<Product>()
+        val dislikeProducts = mutableListOf<Product>()
         var cafe = Cafe()
         val ordProd = mutableMapOf<Int, Int>()
         lateinit var badge: BadgeDrawable
@@ -66,42 +68,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        requestedOrientation = (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
         ordProd.clear()
         product.clear()
+        likeProducts.clear()
+        dislikeProducts.clear()
+
+
         cafe = intent.getSerializableExtra("cafe") as Cafe
 
-        requestedOrientation = (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
         Picasso.get().load(cafe.img).into(img)
 
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("products_${cafe.name}")
-        val myQuery = myRef.orderByChild("type")
-
-
-        myQuery.addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-                product.add(dataSnapshot.getValue<Product>(Product::class.java)!!)
-            }
-
-            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-        })
-
+        workWithDatabase()
 
         badge = bottomNavigation.getOrCreateBadge(R.id.navigation_basket)
         badge.isVisible = false
@@ -121,8 +101,36 @@ class MainActivity : AppCompatActivity() {
             }
             openFragment(MenuFragment())
             timer.cancel()
-        }, 2000)
+        }, 3000)
 
+    }
+
+
+    private fun workWithDatabase(){
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.reference.child(cafe.name).child("продукты")
+
+        myRef.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
+                product.add(dataSnapshot.getValue<Product>(Product::class.java)!!)
+            }
+
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
+            }
+        })
     }
 
 }

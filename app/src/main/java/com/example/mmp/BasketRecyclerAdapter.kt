@@ -3,16 +3,13 @@ package com.example.mmp
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.squareup.picasso.Picasso
 
 
 class BasketRecyclerAdapter(
     products: Array<Product>,
-    private val container1: FrameLayout,
+    private val container1: LinearLayout,
     private val container2: FrameLayout,
     private val btn: Button
 ) :

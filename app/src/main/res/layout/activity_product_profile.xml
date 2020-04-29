@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ProductProfileActivity">
+        tools:context=".ProductProfileActivity"
+        android:focusableInTouchMode="true"
+        android:focusable="false">
 
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,19 +63,19 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/like"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_margin="8dp"
-                        android:src="@drawable/ic_like" />
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/like"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/ic_like" />
 
                     <TextView
                             android:id="@+id/likeCnt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="0"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:text="0" />
 
                 </LinearLayout>
 
@@ -84,20 +85,19 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/dislike"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_margin="8dp"
-                        android:src="@drawable/ic_dislike" />
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/dislike"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/ic_dislike" />
 
                     <TextView
                             android:id="@+id/dislikeCnt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="0"
-                            />
+                            android:text="0" />
 
                 </LinearLayout>
 
@@ -119,13 +119,13 @@
 
             <com.google.android.material.textfield.TextInputLayout
 
-                    app:endIconMode="custom"
-                    app:endIconDrawable="@drawable/ic_send"
                     android:id="@+id/textField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/enter"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    app:endIconDrawable="@drawable/ic_send"
+                    app:endIconMode="custom">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input"
@@ -137,7 +137,18 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                    android:id="@+id/commentsEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:gravity="center"
+                    android:text="@string/comments_empty"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
             <androidx.recyclerview.widget.RecyclerView
+                    android:scrollbars="none"
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -145,7 +156,7 @@
             </androidx.recyclerview.widget.RecyclerView>
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
