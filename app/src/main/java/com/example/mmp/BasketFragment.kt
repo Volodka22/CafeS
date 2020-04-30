@@ -1,13 +1,17 @@
 package com.example.mmp
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
+import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_basket.*
 
 
@@ -67,24 +71,12 @@ class BasketFragment : Fragment() {
         super.onStart()
     }
 
-    private fun makeDialog() {
+    private fun makeDialog(numberTable: Int) {
 
-        val singleItems = mutableListOf<String>()
-
-        for(i in 1..MainActivity.cafe.countTable)
-            singleItems.add("Стол № $i")
-
-        val checkedItem = 0
-
-        var chooseItem = 1
-
+        if(numberTable == 0) return
 
         MaterialAlertDialogBuilder(activity!!)
-            .setSingleChoiceItems(singleItems.toTypedArray(), checkedItem) { _, which ->
-                // Respond to item chosen
-                chooseItem = which + 1
-            }
-            .setTitle(R.string.dialog_accept)
+            .setTitle("Ваш стол № $numberTable. Подтвердите заказ.")
             .setPositiveButton(
                 R.string.fire
             ) { _, _ ->
@@ -94,7 +86,7 @@ class BasketFragment : Fragment() {
 
                 val user = User()
 
-                user.numberTable = chooseItem
+                user.numberTable = numberTable
 
                 MainActivity.ordProd.forEach { (key, cnt) ->
                     user.array.add(User.Arr(MainActivity.product[key].name, cnt))
@@ -119,11 +111,18 @@ class BasketFragment : Fragment() {
             }.show()
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(data != null){
+            makeDialog(data.getIntExtra("numberTable",0))
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         btn.setOnClickListener {
 
-            makeDialog()
+            startActivityForResult(Intent(activity,QrActivity::class.java),1)
 
         }
 
@@ -132,5 +131,7 @@ class BasketFragment : Fragment() {
         upd()
 
     }
+
+
 
 }
