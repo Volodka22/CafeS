@@ -105,7 +105,7 @@ class LoginActivity : FragmentActivity(), OnMapReadyCallback {
         })
     }
 
-    fun listInit(){
+    private fun listInit(){
 
         viewManager = androidx.recyclerview.widget.LinearLayoutManager(this)
 

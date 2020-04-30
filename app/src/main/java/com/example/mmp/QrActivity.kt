@@ -12,10 +12,9 @@ import com.google.zxing.integration.android.IntentResult
 class QrActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Toast.makeText(this, "Сканируйте QR код на вашем столе", Toast.LENGTH_LONG).show()
         val integrator = IntentIntegrator(this)
         integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)
-        integrator.setPrompt("Scan")
+        integrator.setPrompt("Сканируйте QR код на вашем столе")
         integrator.setCameraId(0)
         integrator.setBeepEnabled(false)
         integrator.setBarcodeImageEnabled(false)
